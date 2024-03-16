@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create an Account</title>
+<link rel="stylesheet" href="/CSS/userR.css">
+</head>
+
+<body>
+  <form id="registrationForm" method="post">
+    <h2>Create An Account</h2>
+    <div class="container">
+      
+      <label for="fullname"><b>Full Name</b></label>
+      <input type="text" placeholder="Enter Full Name" id="fullname" name="fullname" required><br>
+
+      <label for="age"><b>Age</b></label>
+      <input type="number" placeholder="Enter Age" id="age" name="age" required><br>
+
+      <label for="address"><b>Address</b></label>
+      <input type="text" placeholder="Enter Address" id="address" name="address" required><br>
+
+      <label for="gender"><b>Gender</b></label>
+      <select id="gender" name="gender" required>
+        <option value="">Select Gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select><br>
+
+      <label for="email"><b>Email</b></label>
+      <input type="email" placeholder="Enter Email" id="email" name="email" required><br>
+
+      <label for="username"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" id="username" name="username" required><br>
+
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" id="password" name="password" required><br>
+      
+      <button type="button" id="addData" class="registerbtn">Confirm</button>
+      
+    </div>
+  </form>
+  
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyCyGArTzwEYhJ5XxfASMwe9vZ7snKAphA0",
+      authDomain: "child-care-management-sy-aee5f.firebaseapp.com",
+      databaseURL: "https://child-care-management-sy-aee5f-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "child-care-management-sy-aee5f",
+      storageBucket: "child-care-management-sy-aee5f.appspot.com",
+      messagingSenderId: "570029759966",
+      appId: "1:570029759966:web:7beb634301b28f3b87914f",
+      measurementId: "G-6TN3JERKBJ"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    $("#addData").click(function () {
+      // Check if all fields are filled up
+      if (checkFields()) {
+        var fullnameData = $("#fullname").val();
+        var ageData = $("#age").val();
+        var genderData = $("#gender").val();
+        var emailData = $("#email").val();
+        var passwordData = $("#password").val();
+        var addressData = $("#address").val();
+        var usernameData = $("#username").val();
+
+        db.ref("Parent/" + usernameData ).set({
+            name: fullnameData,
+            age: ageData,
+            address: addressData,
+            gender: genderData,
+            email: emailData,
+            username: usernameData,
+            password: passwordData
+          })
+          .then(() => {
+            var confirmNextEntry = confirm("User registered successfully! Do you want to enter another information?");
+            if (confirmNextEntry) {
+              // Clear input fields for next entry
+              $("#fullname").val("");
+              $("#age").val("");
+              $("#address").val("");
+              $("#gender").val("");
+              $("#email").val("");
+              $("#username").val("");
+              $("#password").val("");
+            } else {
+              // Redirect to userLogin.html
+              window.location.href = "userLogin.html";
+            }
+          })
+          .catch((error) => {
+            alert("Error registering user: " + error.message);
+          });
+      } else {
+        alert("Please fill in all fields.");
+      }
+    });
+
+    // Function to check if all fields are filled up
+    function checkFields() {
+      var fullname = $("#fullname").val();
+      var age = $("#age").val();
+      var address = $("#address").val();
+      var gender = $("#gender").val();
+      var email = $("#email").val();
+      var username = $("#username").val();
+      var password = $("#password").val();
+
+      // Check if any field is empty
+      if (fullname === "" || age === "" || address === "" || gender === "" || email === "" || username === "" || password === "") {
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>

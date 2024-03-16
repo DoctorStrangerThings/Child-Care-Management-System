@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="/CSS/userLogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-column">
+            <div class="login-container">
+                <h1>Log in to your Account</h1>
+                <div class="input-fields">
+                    <label for="email">Email:</label><br>
+                    <input type="email" placeholder="Enter Email" name="email" required>
+                </div>
+                
+                <div class="input-fields">
+                    <label for="psw">Password:</label><br>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+                </div>
+                <button type="button" class="forgotbtn" onclick="forgotPassword()">Forgot Password?</button><br>
+                <button type="submit" class="loginbtn">Log In</button><br>
+                <h2>or Login with Social Media</h2>
+                <div class="social-media">
+                    <a href="#" class="fbbtn">
+                        <i class="fa fa-facebook fa-fw"></i> Login with Facebook
+                    </a><br>
+                    <a href="#" class="googlebtn">
+                        <i class="fa fa-google fa-fw"></i> Login with Google+
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="signup-column">
+            <div class="signup-container">
+                <h2>New Here?</br>Sign Up as</h2>
+                <button class="signup-btn" onclick="redirectTo('userR.html')">Parent</button>
+                <button class="signup-btn">Admin</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to redirect to userR.html
+        function redirectTo(url) {
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>
