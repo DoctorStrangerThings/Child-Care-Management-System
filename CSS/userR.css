@@ -1,6 +1,4 @@
-/* userR.css */
 
-/* Reset default margin and padding */
 * {
     margin: 0;
     padding: 0;
@@ -74,4 +72,17 @@
   form {
     text-align: center;
   }
+
+  .registerbtn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    border-radius: 5px;
+  }
+  
   
