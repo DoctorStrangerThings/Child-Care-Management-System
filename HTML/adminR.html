@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="/CSS/adminR.css">
+</head>
+<body>
+    <div class="container">
+        <form id="registrationForm" action="submit_admin_registration.php" method="post">
+            <h2>Admin Registration</h2>
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="suffix">Suffix:</label>
+                <input type="text" id="suffix" name="suffix">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address">
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="password-input-container">
+                    <input type="password" id="password" name="password" required>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('password')"><i class="fas fa-eye"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <div class="password-input-container">
+                    <input type="password" id="confirm_password" name="confirm_password" required>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('confirm_password')"><i class="fas fa-eye"></i></span>
+                </div>
+            </div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCyGArTzwEYhJ5XxfASMwe9vZ7snKAphA0",
+            authDomain: "child-care-management-sy-aee5f.firebaseapp.com",
+            databaseURL: "https://child-care-management-sy-aee5f-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "child-care-management-sy-aee5f",
+            storageBucket: "child-care-management-sy-aee5f.appspot.com",
+            messagingSenderId: "570029759966",
+            appId: "1:570029759966:web:7beb634301b28f3b87914f",
+            measurementId: "G-6TN3JERKBJ"
+    };
+        
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Check if passwords match
+            if (!checkPasswordsMatch()) {
+                alert("Passwords do not match. Please retype them.");
+                return;
+            }
+
+            // Check if all fields are filled up
+            if (checkFields()) {
+                var firstNameData = document.getElementById("first_name").value;
+                var lastNameData = document.getElementById("last_name").value;
+                var suffixData = document.getElementById("suffix").value;
+                var emailData = document.getElementById("email").value;
+                var usernameData = document.getElementById("username").value;
+                var addressData = document.getElementById("address").value;
+                var passwordData = document.getElementById("password").value;
+
+                // Perform database operation here
+                // Example:
+                db.ref("Admin/" + lastNameData + firstNameData).set({
+                    first_name: firstNameData,
+                    last_name: lastNameData,
+                    suffix: suffixData,
+                    email: emailData,
+                    username: usernameData,
+                    address: addressData,
+                    password: passwordData
+                }).then(() => {
+                    alert("Admin registered successfully!");
+                    // Clear form fields
+                    document.getElementById("registrationForm").reset();
+                }).catch((error) => {
+                    alert("Error registering admin: " + error.message);
+                });
+            } else {
+                alert("Please fill in all fields.");
+            }
+        });
+
+        // Function to check if all fields are filled up
+        function checkFields() {
+            var firstName = document.getElementById("first_name").value;
+            var lastName = document.getElementById("last_name").value;
+            var email = document.getElementById("email").value;
+            var username = document.getElementById("username").value;
+            var address = document.getElementById("address").value;
+            var password = document.getElementById("password").value;
+
+            // Check if any field is empty
+            if (firstName === "" || lastName === "" || email === "" || username === "" || address === "" || password === "") {
+                return false;
+            }
+            return true;
+        }
+
+        // Function to check if passwords match
+        function checkPasswordsMatch() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirm_password").value;
+            return password === confirmPassword;
+        }
+
+        // Function to toggle password visibility
+        function togglePasswordVisibility(fieldId) {
+            var field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+            } else {
+                field.type = "password";
+            }
+        }
+    </script>
+</body>
+</html>
