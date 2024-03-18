@@ -22,6 +22,11 @@
                         <label for="password">Password:</label><br>
                         <input type="password" placeholder="Enter Password" id="password" name="password" required>
                     </div>
+                    <!-- Add input field for phone number -->
+                    <div class="input-fields">
+                        <label for="phone">Phone Number:</label><br>
+                        <input type="text" placeholder="Enter Phone Number" id="phone" name="phone" required>
+                    </div>
                     <button type="button" class="forgotbtn" onclick="forgotPassword()">Forgot Password?</button><br>
                     <button type="submit" class="loginbtn">Log In</button><br> <!-- Changed to type="submit" -->
                 </form> <!-- Closing form element -->
@@ -47,25 +52,13 @@
             </div>
         </div>
     </div>
-
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
     <script>
         const firebaseConfig = {
-            apiKey: "AIzaSyCyGArTzwEYhJ5XxfASMwe9vZ7snKAphA0",
-            authDomain: "child-care-management-sy-aee5f.firebaseapp.com",
-            databaseURL: "https://child-care-management-sy-aee5f-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "child-care-management-sy-aee5f",
-            storageBucket: "child-care-management-sy-aee5f.appspot.com",
-            messagingSenderId: "570029759966",
-            appId: "1:570029759966:web:7beb634301b28f3b87914f",
-            measurementId: "G-6TN3JERKBJ"
-    };
-
-        // Initialize Firebase
+            // Your Firebase configuration
+        };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
@@ -74,19 +67,34 @@
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const phone = document.getElementById('phone').value;
 
-            // Check if email and password match for any parent
-            db.ref("Parent").once("value", function(snapshot) {
-                snapshot.forEach(function(childSnapshot) {
-                    const userData = childSnapshot.val();
-                    if (userData.email === email && userData.password === password) {
-                        // Redirect to userHome.html
-                        window.location.href = "userHome.html";
+            // Query the database for the user with the provided email
+            db.ref("Parent").orderByChild("email").equalTo(email).once("value", function(snapshot) {
+                if (snapshot.exists()) {
+                    // User with the provided email found
+                    let passwordMatched = false;
+                    snapshot.forEach(function(childSnapshot) {
+                        const userData = childSnapshot.val();
+                        // Check if the password matches
+                        if (userData.password === password) {
+                            passwordMatched = true;
+                            // Verify phone number (you can implement verification logic here)
+                            if (userData.mobile === phone) {
+                                // Redirect to userHome.html
+                                window.location.href = "userR.html";
+                            } else {
+                                alert("Phone number verification failed.");
+                            }
+                        }
+                    });
+                    if (!passwordMatched) {
+                        alert("Invalid password.");
                     }
-                });
-
-                // If no matching email and password found
-                alert("Invalid email or password.");
+                } else {
+                    // No user found with the provided email
+                    alert("No user found with the provided email.");
+                }
             });
         });
 
