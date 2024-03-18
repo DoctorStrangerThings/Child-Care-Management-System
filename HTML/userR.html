@@ -28,6 +28,9 @@
         <option value="other">Other</option>
       </select><br>
 
+      <label for="mobile"><b>Mobile Number</b></label>
+      <input type="text" placeholder="Enter Mobile Number" id="mobile" name="mobile" required><br>
+
       <label for="email"><b>Email</b></label>
       <input type="email" placeholder="Enter Email" id="email" name="email" required><br>
 
@@ -70,6 +73,7 @@
         var fullnameData = $("#fullname").val();
         var ageData = $("#age").val();
         var genderData = $("#gender").val();
+        var mobileData = $("#mobile").val();
         var emailData = $("#email").val();
         var passwordData = $("#password").val();
         var addressData = $("#address").val();
@@ -80,6 +84,7 @@
             age: ageData,
             address: addressData,
             gender: genderData,
+            mobile: mobileData,
             email: emailData,
             username: usernameData,
             password: passwordData
@@ -92,6 +97,7 @@
               $("#age").val("");
               $("#address").val("");
               $("#gender").val("");
+              $("#mobile").val("");
               $("#email").val("");
               $("#username").val("");
               $("#password").val("");
@@ -114,12 +120,13 @@
       var age = $("#age").val();
       var address = $("#address").val();
       var gender = $("#gender").val();
+      var mobile = $("#mobile").val();
       var email = $("#email").val();
       var username = $("#username").val();
       var password = $("#password").val();
 
       // Check if any field is empty
-      if (fullname === "" || age === "" || address === "" || gender === "" || email === "" || username === "" || password === "") {
+      if (fullname === "" || age === "" || address === "" || gender === "" || mobile === "" || email === "" || username === "" || password === "") {
         return false;
       }
       return true;
