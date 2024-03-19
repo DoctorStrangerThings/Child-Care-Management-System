@@ -28,10 +28,6 @@
                 <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
                 <label for="address">Address:</label>
                 <input type="text" id="address" name="address">
             </div>
@@ -49,7 +45,7 @@
                     <span class="toggle-password" onclick="togglePasswordVisibility('confirm_password')"><i class="fas fa-eye"></i></span>
                 </div>
             </div>
-            <button type="submit">Register</button>
+            <button type="submit" id="registerBtn">Register</button>
         </form>
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -67,13 +63,25 @@
             messagingSenderId: "570029759966",
             appId: "1:570029759966:web:7beb634301b28f3b87914f",
             measurementId: "G-6TN3JERKBJ"
-    };
-        
+        };
 
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        // Check the number of registered admins
+        db.ref("Admin").once("value", function(snapshot) {
+            const numAdmins = snapshot.numChildren();
+            const registerBtn = document.getElementById("registerBtn");
+
+            // Limit registration to 2 admins
+            if (numAdmins >= 2) {
+                registerBtn.disabled = true;
+                alert("Registration limit reached. Only 2 admins can register.");
+            }
+        });
+
+        // Add event listener for form submission
         document.getElementById("registrationForm").addEventListener("submit", function(event) {
             event.preventDefault(); // Prevent default form submission
 
@@ -83,30 +91,37 @@
                 return;
             }
 
-            // Check if all fields are filled up
+            // Check if all fields are filled
             if (checkFields()) {
                 var firstNameData = document.getElementById("first_name").value;
                 var lastNameData = document.getElementById("last_name").value;
                 var suffixData = document.getElementById("suffix").value;
                 var emailData = document.getElementById("email").value;
-                var usernameData = document.getElementById("username").value;
-                var addressData = document.getElementById("address").value;
                 var passwordData = document.getElementById("password").value;
-
+                var addressData = document.getElementById("address").value;
                 // Perform database operation here
-                // Example:
                 db.ref("Admin/" + lastNameData + firstNameData).set({
                     first_name: firstNameData,
                     last_name: lastNameData,
                     suffix: suffixData,
                     email: emailData,
-                    username: usernameData,
                     address: addressData,
                     password: passwordData
                 }).then(() => {
                     alert("Admin registered successfully!");
-                    // Clear form fields
-                    document.getElementById("registrationForm").reset();
+                    document.getElementById("registrationForm").reset(); // Clear form fields
+
+                    // Check the number of registered admins again
+                    db.ref("Admin").once("value", function(snapshot) {
+                        const numAdmins = snapshot.numChildren();
+                        const registerBtn = document.getElementById("registerBtn");
+
+                        // Disable registration button if limit reached
+                        if (numAdmins >= 2) {
+                            registerBtn.disabled = true;
+                            alert("Registration limit reached. Only 2 admins can register.");
+                        }
+                    });
                 }).catch((error) => {
                     alert("Error registering admin: " + error.message);
                 });
@@ -115,17 +130,16 @@
             }
         });
 
-        // Function to check if all fields are filled up
+        // Function to check if all fields are filled
         function checkFields() {
             var firstName = document.getElementById("first_name").value;
             var lastName = document.getElementById("last_name").value;
             var email = document.getElementById("email").value;
-            var username = document.getElementById("username").value;
             var address = document.getElementById("address").value;
             var password = document.getElementById("password").value;
 
             // Check if any field is empty
-            if (firstName === "" || lastName === "" || email === "" || username === "" || address === "" || password === "") {
+            if (firstName === "" || lastName === "" || email === "" || address === "" || password === "") {
                 return false;
             }
             return true;

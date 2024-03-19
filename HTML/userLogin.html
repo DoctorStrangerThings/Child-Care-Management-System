@@ -22,11 +22,6 @@
                         <label for="password">Password:</label><br>
                         <input type="password" placeholder="Enter Password" id="password" name="password" required>
                     </div>
-                    <!-- Add input field for phone number -->
-                    <div class="input-fields">
-                        <label for="phone">Phone Number:</label><br>
-                        <input type="text" placeholder="Enter Phone Number" id="phone" name="phone" required>
-                    </div>
                     <button type="button" class="forgotbtn" onclick="forgotPassword()">Forgot Password?</button><br>
                     <button type="submit" class="loginbtn">Log In</button><br> <!-- Changed to type="submit" -->
                 </form> <!-- Closing form element -->
@@ -48,7 +43,7 @@
                 <h2>Sign Up</h2>
                 <p>As</p>
                 <button class="signup-btn" onclick="redirectTo('userR.html')">Parent</button>
-                <button class="signup-btn">Admin</button>
+                <button class="signup-btn" onclick="redirectTo('adminR.html')">Admin</button>
             </div>
         </div>
     </div>
@@ -57,8 +52,16 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script>
         const firebaseConfig = {
-            // Your Firebase configuration
+            apiKey: "AIzaSyCyGArTzwEYhJ5XxfASMwe9vZ7snKAphA0",
+            authDomain: "child-care-management-sy-aee5f.firebaseapp.com",
+            databaseURL: "https://child-care-management-sy-aee5f-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "child-care-management-sy-aee5f",
+            storageBucket: "child-care-management-sy-aee5f.appspot.com",
+            messagingSenderId: "570029759966",
+            appId: "1:570029759966:web:7beb634301b28f3b87914f",
+            measurementId: "G-6TN3JERKBJ"
         };
+
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
@@ -67,39 +70,33 @@
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const phone = document.getElementById('phone').value;
 
-            // Query the database for the user with the provided email
+            
             db.ref("Parent").orderByChild("email").equalTo(email).once("value", function(snapshot) {
                 if (snapshot.exists()) {
-                    // User with the provided email found
+                    
                     let passwordMatched = false;
                     snapshot.forEach(function(childSnapshot) {
                         const userData = childSnapshot.val();
-                        // Check if the password matches
+                        
                         if (userData.password === password) {
                             passwordMatched = true;
-                            // Verify phone number (you can implement verification logic here)
-                            if (userData.mobile === phone) {
-                                // Redirect to userHome.html
-                                window.location.href = "userR.html";
-                            } else {
-                                alert("Phone number verification failed.");
-                            }
+                            
+                            window.location.href = "userHome.html"; // Redirect to userHome.html
                         }
                     });
                     if (!passwordMatched) {
                         alert("Invalid password.");
                     }
                 } else {
-                    // No user found with the provided email
+                
                     alert("No user found with the provided email.");
                 }
             });
         });
 
         function forgotPassword() {
-            // Implement forgot password functionality if needed
+            // Implement forgot password functionality here
         }
 
         function redirectTo(url) {
