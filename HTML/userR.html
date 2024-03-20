@@ -99,53 +99,64 @@
     $("#addData").click(function () {
       // Check if all required fields are filled up
       if (checkRequiredFields()) {
-        var firstnameData = $("#firstname").val();
-        var lastnameData = $("#lastname").val();
-        var suffixData = $("#suffix").val();
-        var ageData = $("#age").val();
-        var genderData = $("#gender").val();
-        var mobileData = $("#mobile").val();
         var emailData = $("#email").val();
         var passwordData = $("#password").val();
         var confirm_passwordData = $("#confirm_password").val();
-        var addressData = $("#address").val();
 
+        // Check if password fields match
         if (passwordData !== confirm_passwordData) {
           alert("Passwords do not match.");
           return;
         }
 
-        db.ref("Parent/" + lastnameData + firstnameData).set({
-          firstname: firstnameData,
-          lastname: lastnameData,
-          suffix: suffixData,
-          age: ageData,
-          address: addressData,
-          gender: genderData,
-          mobile: mobileData,
-          email: emailData,
-          password: passwordData
-        })
-        .then(() => {
-          var confirmNextEntry = confirm("User registered successfully! Do you want to enter another information?");
-          if (confirmNextEntry) {
-            // Clear input fields for next entry
-            $("#firstname").val("");
-            $("#lastname").val("");
-            $("#suffix").val("");
-            $("#age").val("");
-            $("#address").val("");
-            $("#gender").val("");
-            $("#mobile").val("");
-            $("#email").val("");
-            $("#password").val("");
-            $("#confirm_password").val("");
+        // Check if email is already in use
+        checkEmailAvailability(emailData, function(isAvailable) {
+          if (isAvailable) {
+            // If email is available, proceed with registration
+            var firstnameData = $("#firstname").val();
+            var lastnameData = $("#lastname").val();
+            var suffixData = $("#suffix").val();
+            var ageData = $("#age").val();
+            var genderData = $("#gender").val();
+            var mobileData = $("#mobile").val();
+            var addressData = $("#address").val();
+
+            db.ref("Parent/" + lastnameData + firstnameData).set({
+              firstname: firstnameData,
+              lastname: lastnameData,
+              suffix: suffixData,
+              age: ageData,
+              address: addressData,
+              gender: genderData,
+              mobile: mobileData,
+              email: emailData,
+              password: passwordData
+            })
+            .then(() => {
+              var confirmNextEntry = confirm("User registered successfully! Do you want to enter another information?");
+              if (confirmNextEntry) {
+                // Clear input fields for next entry
+                $("#firstname").val("");
+                $("#lastname").val("");
+                $("#suffix").val("");
+                $("#age").val("");
+                $("#address").val("");
+                $("#gender").val("");
+                $("#mobile").val("");
+                $("#email").val("");
+                $("#password").val("");
+                $("#confirm_password").val("");
+              } else {
+                window.location.href = "userLogin.html";
+              }
+            })
+            .catch((error) => {
+              alert("Error registering user: " + error.message);
+            });
           } else {
-            window.location.href = "userLogin.html";
+            // If email is not available, display error message
+            alert("Email is already in use. Please use a different email.");
           }
-        })
-        .catch((error) => {
-          alert("Error registering user: " + error.message);
         });
       } else {
         alert("Please fill in all required fields.");
@@ -184,7 +195,19 @@
     $("#toggleConfirmPassword").click(function() {
       togglePasswordVisibility("confirm_password");
     });
+
+    // Function to check email availability
+    function checkEmailAvailability(email, callback) {
+      db.ref("Parent").orderByChild("email").equalTo(email).once("value", function(snapshot) {
+        if (snapshot.exists()) {
+          // Email already exists
+          callback(false);
+        } else {
+          // Email is available
+          callback(true);
+        }
+      });
+    }
   </script>
 </body>
 </html>
-
