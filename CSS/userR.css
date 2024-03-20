@@ -1,95 +1,93 @@
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-image: url("../image/playground.jpg");
-    background-size: cover; 
-    background-repeat: no-repeat;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+body {
+  font-family: sans-serif;
+  background-image: url("../image/playground.jpg");
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0; 
+  padding: 0;
 }
 
-  
+.container {
+  padding: 20px;
+  background-color: #3cd88f;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  width: 300px;
+}
 
-  .container {
-    background-color: pink;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    margin: auto;
-    margin-top: 50px;
-  }
-  
-  /* Style the header */
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  /* Style the input fields */
-  input[type=text], input[type=password], input[type=email], input[type=number], select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  /* Style the confirm button */
-  button[type=confirm] {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  /* Change the background color of the confirm button on hover */
-  button[type=confirm]:hover {
-    background-color: #45a049; /* Darker green */
-  }
-  
-  /* Add extra styling for labels */
-  label {
-    font-weight: bold;
-  }
-  
-  /* Add spacing between input fields and labels */
-  label, input[type=text], input[type=password], input[type=email], input[type=number], select {
-    display: block;
-  }
-  
-  /* Center the form on the page */
-  form {
-    text-align: center;
-  }
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .registerbtn {
-    background-color: #04AA6D;
-    color: white;
-    padding: 16px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-    border-radius: 5px;
-  }
-  
-  
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+  width: calc(100% - 22px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.password-input-container {
+  position: relative;
+}
+
+select#gender {
+  width: calc(100%);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+#backBtn {
+  background-color: #ff0000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#backBtn:hover {
+  background-color: #ff3333;
+}

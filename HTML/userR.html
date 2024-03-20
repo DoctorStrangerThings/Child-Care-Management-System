@@ -8,11 +8,16 @@
 
 <body>
   <form id="registrationForm" method="post">
-    <h2>Create An Account</h2>
     <div class="container">
-      
-      <label for="fullname"><b>Full Name</b></label>
-      <input type="text" placeholder="Enter Full Name" id="fullname" name="fullname" required><br>
+      <h2>Create An Account</h2>
+      <label for="firstname"><b>First Name</b></label>
+      <input type="text" placeholder="Enter First Name" id="firstname" name="firstname" required><br>
+
+      <label for="lastname"><b>Last Name</b></label>
+      <input type="text" placeholder="Enter Last Name" id="lastname" name="lastname" required><br>
+
+      <label for="suffix"><b>Suffix</b></label>
+      <input type="text" placeholder="Enter Suffix" id="suffix" name="suffix"><br>
 
       <label for="age"><b>Age</b></label>
       <input type="number" placeholder="Enter Age" id="age" name="age" required><br>
@@ -41,6 +46,7 @@
       <input type="password" placeholder="Enter Password" id="password" name="password" required><br>
       
       <button type="button" id="addData" class="registerbtn">Register</button>
+      <button type="button" id="backBtn" onclick="goBack()">Back</button>
       
     </div>
   </form>
@@ -50,6 +56,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
   <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
   <script>
     const firebaseConfig = {
@@ -68,68 +75,79 @@
     const db = firebase.database();
 
     $("#addData").click(function () {
-      // Check if all fields are filled up
-      if (checkFields()) {
-        var fullnameData = $("#fullname").val();
-        var ageData = $("#age").val();
-        var genderData = $("#gender").val();
-        var mobileData = $("#mobile").val();
-        var emailData = $("#email").val();
-        var passwordData = $("#password").val();
-        var addressData = $("#address").val();
-        var usernameData = $("#username").val();
+  // Check if all required fields are filled up
+  if (checkRequiredFields()) {
+    var firstnameData = $("#firstname").val();
+    var lastnameData = $("#lastname").val();
+    var suffixData = $("#suffix").val();
+    var ageData = $("#age").val();
+    var genderData = $("#gender").val();
+    var mobileData = $("#mobile").val();
+    var emailData = $("#email").val();
+    var passwordData = $("#password").val();
+    var addressData = $("#address").val();
+    var usernameData = $("#username").val();
 
-        db.ref("Parent/" + usernameData ).set({
-            name: fullnameData,
-            age: ageData,
-            address: addressData,
-            gender: genderData,
-            mobile: mobileData,
-            email: emailData,
-            username: usernameData,
-            password: passwordData
-          })
-          .then(() => {
-            var confirmNextEntry = confirm("User registered successfully! Do you want to enter another information?");
-            if (confirmNextEntry) {
-              // Clear input fields for next entry
-              $("#fullname").val("");
-              $("#age").val("");
-              $("#address").val("");
-              $("#gender").val("");
-              $("#mobile").val("");
-              $("#email").val("");
-              $("#username").val("");
-              $("#password").val("");
-            } else {
-              // Redirect to userLogin.html
-              window.location.href = "userLogin.html";
-            }
-          })
-          .catch((error) => {
-            alert("Error registering user: " + error.message);
-          });
-      } else {
-        alert("Please fill in all fields.");
-      }
-    });
+    db.ref("Parent/" + usernameData ).set({
+        firstname: firstnameData,
+        lastname: lastnameData,
+        suffix: suffixData,
+        age: ageData,
+        address: addressData,
+        gender: genderData,
+        mobile: mobileData,
+        email: emailData,
+        username: usernameData,
+        password: passwordData
+      })
+      .then(() => {
+        var confirmNextEntry = confirm("User registered successfully! Do you want to enter another information?");
+        if (confirmNextEntry) {
+          // Clear input fields for next entry
+          $("#firstname").val("");
+          $("#lastname").val("");
+          $("#suffix").val("");
+          $("#age").val("");
+          $("#address").val("");
+          $("#gender").val("");
+          $("#mobile").val("");
+          $("#email").val("");
+          $("#username").val("");
+          $("#password").val("");
+        } else {
+          // Redirect to userLogin.html
+          window.location.href = "userLogin.html";
+        }
+      })
+      .catch((error) => {
+        alert("Error registering user: " + error.message);
+      });
+  } else {
+    alert("Please fill in all required fields.");
+  }
+});
 
-    // Function to check if all fields are filled up
-    function checkFields() {
-      var fullname = $("#fullname").val();
-      var age = $("#age").val();
-      var address = $("#address").val();
-      var gender = $("#gender").val();
-      var mobile = $("#mobile").val();
-      var email = $("#email").val();
-      var username = $("#username").val();
-      var password = $("#password").val();
+// Function to check if all required fields are filled up
+function checkRequiredFields() {
+  var firstname = $("#firstname").val();
+  var lastname = $("#lastname").val();
+  var age = $("#age").val();
+  var address = $("#address").val();
+  var gender = $("#gender").val();
+  var mobile = $("#mobile").val();
+  var email = $("#email").val();
+  var username = $("#username").val();
+  var password = $("#password").val();
 
-      // Check if any field is empty
-      if (fullname === "" || age === "" || address === "" || gender === "" || mobile === "" || email === "" || username === "" || password === "") {
-        return false;
-      }
-      return true;
+  // Check if any required field is empty
+  if (firstname === "" || lastname === "" || age === "" || address === "" || gender === "" || mobile === "" || email === "" || username === "" || password === "") {
+    return false;
+  }
+  return true;
+}   
+
+    function goBack() {
+        window.location.href = "userLogin.html";
     }
   </script>
 </body>

@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: sans-serif;
     background-image: url("../image/playground.jpg");
     background-size: cover; 
     background-repeat: no-repeat;
@@ -7,13 +7,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    
 }
 
 .container {
-    max-width: 400px;
+    width: 300px;
     padding: 20px;
-    background-color: pink;
+    background-color: #3cd88f;;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 50px;
@@ -54,6 +54,7 @@ button {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-bottom: 5px;
 }
 
 button:hover {
@@ -75,4 +76,20 @@ button:hover {
 
 .password-input-container .toggle-password:hover {
     color: #333;
+}
+
+
+#backBtn {
+    background-color: #ff0000; 
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+
+#backBtn:hover {
+    background-color: #ff3333;
 }

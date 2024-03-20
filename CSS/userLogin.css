@@ -1,6 +1,10 @@
-/* Your existing CSS styles */
+
 body {
-  background-color: #3cd88f;
+  background-image: url(../image/playground.jpg);
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: sans-serif;
 }
 
 .container {
@@ -38,7 +42,7 @@ h2 {
   font-size: 50px;
   font-style: italic;
   font-weight: bold;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: sans-serif;
 }
 
 h2 {
@@ -87,7 +91,6 @@ h2 {
 
 .loginbtn:hover{
   color: white;
-  width:;
   box-shadow: 0 0 20px rgba(104, 85, 224, 0.6);
   background-color: rgba(104, 85, 224, 1);
 }
@@ -120,12 +123,13 @@ h2 {
 
 .signup-btn {
   width: 100%;
-  background-color: green;
+  background-color: #3cd88f;
   color: #fff;
   border: none;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
+  border: 1px solid black;
 }
 
 .signup-btn:hover {

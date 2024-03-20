@@ -45,7 +45,9 @@
                     <span class="toggle-password" onclick="togglePasswordVisibility('confirm_password')"><i class="fas fa-eye"></i></span>
                 </div>
             </div>
-            <button type="submit" id="registerBtn">Register</button>
+            <button type="submit" id="registerbtn">Register</button>
+            <button type="button" id="backBtn" onclick="goBack()">Back</button>
+            </div>
         </form>
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -161,6 +163,10 @@
                 field.type = "password";
             }
         }
+
+        function goBack() {
+        window.location.href = "userLogin.html";
+    }
     </script>
 </body>
 </html>
