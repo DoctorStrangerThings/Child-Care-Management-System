@@ -12,19 +12,21 @@
         <div class="login-column">
             <div class="login-container">
                 <h1>Log in to your Account</h1>
-                <form id="loginForm" method="post"> <!-- Enclosing form element -->
+                <form id="loginForm" method="post">
                     <div class="input-fields">
                         <label for="email">Email:</label><br>
                         <input type="email" placeholder="Enter Email" id="email" name="email" required>
                     </div>
-                    
                     <div class="input-fields">
                         <label for="password">Password:</label><br>
-                        <input type="password" placeholder="Enter Password" id="password" name="password" required>
-                    </div>
+                        <div class="password-input-container">
+                            <input type="password" placeholder="Enter Password" id="password" name="password" required>
+                            <span class="password-toggle-icon" onclick="togglePasswordVisibility()"><i class="fa fa-eye"></i></span>
+                        </div>
+                    </div>                    
                     <button type="button" class="forgotbtn" onclick="forgotPassword()">Forgot Password?</button><br>
-                    <button type="submit" class="loginbtn">Log In</button><br> <!-- Changed to type="submit" -->
-                </form> <!-- Closing form element -->
+                    <button type="submit" class="loginbtn">Log In</button><br>
+                </form> 
                 <h3>or</h3>
                 <div class="social-media">
                     <a href="#" class="fbbtn">
@@ -49,7 +51,9 @@
     </div>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCyGArTzwEYhJ5XxfASMwe9vZ7snKAphA0",
@@ -95,12 +99,23 @@
             });
         });
 
-        function forgotPassword() {
-            // Implement forgot password functionality here
-        }
-
         function redirectTo(url) {
             window.location.href = url;
+        }
+
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const icon = document.querySelector('.password-toggle-icon i');
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
         }
     </script>
 </body>

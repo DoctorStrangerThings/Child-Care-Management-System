@@ -1,5 +1,6 @@
-body{
-  background-color: #ccc;
+/* Your existing CSS styles */
+body {
+  background-color: #3cd88f;
 }
 
 .container {
@@ -15,44 +16,38 @@ body{
   flex-direction: column;
 }
 
-
 .signup-container {
-  height: 100%; /* Ensure containers take up full height */
-  background-color: pink;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center; /* Center-align text and buttons */
-}
-
-.login-container {
-  height: 100%; /* Ensure containers take up full height */
+  height: 100%;
   background-color: skyblue;
   padding: 20px;
   border-radius: 10px;
-  text-align: center; /* Center-align text and buttons */
+  text-align: center;
 }
 
-h1 {
+.login-container {
+  height: 100%;
+  background-color:#3cd88f;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+h1,
+h2 {
   color: white;
   font-size: 50px;
   font-style: italic;
   font-weight: bold;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  -webkit-text-stroke: 1px black;
 }
 
 h2 {
-  color: black;
-  font-size: 50px;
-  font-style: italic;
-  font-weight: bold;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   -webkit-text-stroke: 1px white;
 }
 
 .input-fields input[type="email"],
 .input-fields input[type="password"] {
-  width: 100%;
+  width: calc(100% - 30px); /* Adjusted width to make it a little wider */
   height: 40px;
   padding: 10px;
   margin-bottom: 10px;
@@ -78,18 +73,24 @@ h2 {
 
 .loginbtn,
 .signup-btn {
-  border-radius: 10px;
-  margin-top: 40px;
-  height: 30px;
-  width: 100%;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.2);
+  border-radius: 4px;
+  margin-top: 20px;
+  height: 40px;
+  width: 200px;
   font-size: 15px;
-  color: #fff;
-  background-color: blue;
-  border: none;
   cursor: pointer;
+  color: rgb(8, 3, 36);
+  background-color: rgba(255, 255, 255, 1);
+  border: 1px solid rgb(16, 16, 18);
 }
 
-.loginbtn:hover,
+.loginbtn:hover{
+  color: white;
+  width:;
+  box-shadow: 0 0 20px rgba(104, 85, 224, 0.6);
+  background-color: rgba(104, 85, 224, 1);
+}
 .signup-btn:hover {
   opacity: 0.8;
 }
@@ -110,7 +111,7 @@ h2 {
 }
 
 .fbbtn {
-  background-color: #3B5998;
+  background-color: #3b5998;
 }
 
 .googlebtn {
@@ -139,4 +140,40 @@ h2 {
 p {
   font-size: 30px;
   color: black;
+}
+
+/* Additional styles for password toggle */
+.password-input-container {
+  position: relative;
+}
+
+#password {
+  width: calc(100% - 50px); /* Adjusted width to make it a little wider */
+  height: 40px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 5px; /* Adjusted position for better alignment */
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.password-toggle-icon i {
+  font-size: 18px;
+  line-height: 1;
+  color: #333;
+  transition: color 0.3s ease-in-out;
+  position: relative;
+  top: -2px; /* Adjusted position for better alignment */
+}
+
+.password-toggle-icon i:hover {
+  color: #000;
 }
