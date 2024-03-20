@@ -91,3 +91,29 @@ select#gender {
 #backBtn:hover {
   background-color: #ff3333;
 }
+
+  .password-toggle {
+    position: relative;
+  }
+  .password-toggle i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  #password,
+  #confirm_password {
+    width: 280px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 auto;
+  }
+  
+  
+  
+  
+  
+  

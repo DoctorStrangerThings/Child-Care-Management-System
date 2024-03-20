@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Parent Registration</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="/CSS/userR.css">
 </head>
 
@@ -39,11 +40,17 @@
       <label for="email"><b>Email</b></label>
       <input type="email" placeholder="Enter Email" id="email" name="email" required><br>
 
-      <label for="username"><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" id="username" name="username" required><br>
-
       <label for="password"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" id="password" name="password" required><br>
+      <div class="password-toggle">
+        <input type="password" placeholder="Enter Password" id="password" name="password" required>
+        <i class="fa fa-eye" id="togglePassword"></i>
+      </div><br>
+
+      <label for="confirm_password"><b>Confirm Password</b></label>
+      <div class="password-toggle">
+        <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" required>
+        <i class="fa fa-eye" id="toggleConfirmPassword"></i>
+      </div><br>
       
       <button type="button" id="addData" class="registerbtn">Register</button>
       <button type="button" id="backBtn" onclick="goBack()">Back</button>
@@ -74,81 +81,110 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
+    // Function to toggle password visibility
+    function togglePasswordVisibility(inputId) {
+      const passwordInput = document.getElementById(inputId);
+      const toggleIcon = document.getElementById(`toggle${inputId.charAt(0).toUpperCase() + inputId.slice(1)}`);
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleIcon.classList.remove("fa-eye");
+        toggleIcon.classList.add("fa-eye-slash");
+      } else {
+        passwordInput.type = "password";
+        toggleIcon.classList.remove("fa-eye-slash");
+        toggleIcon.classList.add("fa-eye");
+      }
+    }
+
     $("#addData").click(function () {
-  // Check if all required fields are filled up
-  if (checkRequiredFields()) {
-    var firstnameData = $("#firstname").val();
-    var lastnameData = $("#lastname").val();
-    var suffixData = $("#suffix").val();
-    var ageData = $("#age").val();
-    var genderData = $("#gender").val();
-    var mobileData = $("#mobile").val();
-    var emailData = $("#email").val();
-    var passwordData = $("#password").val();
-    var addressData = $("#address").val();
-    var usernameData = $("#username").val();
+      // Check if all required fields are filled up
+      if (checkRequiredFields()) {
+        var firstnameData = $("#firstname").val();
+        var lastnameData = $("#lastname").val();
+        var suffixData = $("#suffix").val();
+        var ageData = $("#age").val();
+        var genderData = $("#gender").val();
+        var mobileData = $("#mobile").val();
+        var emailData = $("#email").val();
+        var passwordData = $("#password").val();
+        var confirm_passwordData = $("#confirm_password").val();
+        var addressData = $("#address").val();
 
-    db.ref("Parent/" + usernameData ).set({
-        firstname: firstnameData,
-        lastname: lastnameData,
-        suffix: suffixData,
-        age: ageData,
-        address: addressData,
-        gender: genderData,
-        mobile: mobileData,
-        email: emailData,
-        username: usernameData,
-        password: passwordData
-      })
-      .then(() => {
-        var confirmNextEntry = confirm("User registered successfully! Do you want to enter another information?");
-        if (confirmNextEntry) {
-          // Clear input fields for next entry
-          $("#firstname").val("");
-          $("#lastname").val("");
-          $("#suffix").val("");
-          $("#age").val("");
-          $("#address").val("");
-          $("#gender").val("");
-          $("#mobile").val("");
-          $("#email").val("");
-          $("#username").val("");
-          $("#password").val("");
-        } else {
-          // Redirect to userLogin.html
-          window.location.href = "userLogin.html";
+        if (passwordData !== confirm_passwordData) {
+          alert("Passwords do not match.");
+          return;
         }
-      })
-      .catch((error) => {
-        alert("Error registering user: " + error.message);
-      });
-  } else {
-    alert("Please fill in all required fields.");
-  }
-});
 
-// Function to check if all required fields are filled up
-function checkRequiredFields() {
-  var firstname = $("#firstname").val();
-  var lastname = $("#lastname").val();
-  var age = $("#age").val();
-  var address = $("#address").val();
-  var gender = $("#gender").val();
-  var mobile = $("#mobile").val();
-  var email = $("#email").val();
-  var username = $("#username").val();
-  var password = $("#password").val();
+        db.ref("Parent/" + lastnameData + firstnameData).set({
+          firstname: firstnameData,
+          lastname: lastnameData,
+          suffix: suffixData,
+          age: ageData,
+          address: addressData,
+          gender: genderData,
+          mobile: mobileData,
+          email: emailData,
+          password: passwordData
+        })
+        .then(() => {
+          var confirmNextEntry = confirm("User registered successfully! Do you want to enter another information?");
+          if (confirmNextEntry) {
+            // Clear input fields for next entry
+            $("#firstname").val("");
+            $("#lastname").val("");
+            $("#suffix").val("");
+            $("#age").val("");
+            $("#address").val("");
+            $("#gender").val("");
+            $("#mobile").val("");
+            $("#email").val("");
+            $("#password").val("");
+            $("#confirm_password").val("");
+          } else {
+            window.location.href = "userLogin.html";
+          }
+        })
+        .catch((error) => {
+          alert("Error registering user: " + error.message);
+        });
+      } else {
+        alert("Please fill in all required fields.");
+      }
+    });
 
-  // Check if any required field is empty
-  if (firstname === "" || lastname === "" || age === "" || address === "" || gender === "" || mobile === "" || email === "" || username === "" || password === "") {
-    return false;
-  }
-  return true;
-}   
+    // Function to check if all required fields are filled up
+    function checkRequiredFields() {
+      var firstname = $("#firstname").val();
+      var lastname = $("#lastname").val();
+      var age = $("#age").val();
+      var address = $("#address").val();
+      var gender = $("#gender").val();
+      var mobile = $("#mobile").val();
+      var email = $("#email").val();
+      var password = $("#password").val();
+      var confirm_password = $("#confirm_password").val();
+
+      // Check if any required field is empty
+      if (firstname === "" || lastname === "" || age === "" || address === "" || gender === "" || mobile === "" || email === "" || password === "" || confirm_password === "") {
+        return false;
+      }
+      return true;
+    }   
 
     function goBack() {
         window.location.href = "userLogin.html";
     }
+
+    // Toggle password visibility for password field
+    $("#togglePassword").click(function() {
+      togglePasswordVisibility("password");
+    });
+
+    // Toggle password visibility for confirm password field
+    $("#toggleConfirmPassword").click(function() {
+      togglePasswordVisibility("confirm_password");
+    });
   </script>
 </body>
 </html>
+
