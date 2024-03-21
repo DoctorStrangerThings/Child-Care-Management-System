@@ -74,14 +74,15 @@
         // Check the number of registered admins
         db.ref("Admin").once("value", function(snapshot) {
             const numAdmins = snapshot.numChildren();
-            const registerBtn = document.getElementById("registerBtn");
+            const registerBtn = document.getElementById("registerbtn");
 
             // Limit registration to 2 admins
             if (numAdmins >= 2) {
-                registerBtn.disabled = true;
+                registerBtn.disabled = true; // Corrected variable name
                 alert("Registration limit reached. Only 2 admins can register.");
             }
         });
+
 
         // Add event listener for form submission
         document.getElementById("registrationForm").addEventListener("submit", function(event) {

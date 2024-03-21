@@ -13,14 +13,14 @@ body {
 
 .container {
   padding: 20px;
-  background-color: #3cd88f;
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column; 
-  align-items: flex-start; /* Align items to the left */
-  width: 300px;
+    background-color: #90E0EF;;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; /* Align items to the left */
+    width: 300px;
 }
 
 h2 {
